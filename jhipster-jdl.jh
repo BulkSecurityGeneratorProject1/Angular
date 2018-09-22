@@ -1,0 +1,86 @@
+entity Mflapartment {
+    name String required,
+    owner String required,
+    address String required
+    loanNumber String
+}
+
+entity Tenant {
+    name String required,
+    address String ,
+    pan String 
+}
+
+enum ApartmentStatus {
+        Available,Booked,Rented
+}
+
+enum UnitType {
+        1+1,2+2,S+1
+}
+
+entity Apartment{
+    unit String required,
+    type UnitType ,
+    status ApartmentStatus
+}
+
+enum InvoiceStatus {
+        Generated, Paid
+}
+
+enum DepositStatus {
+        Initiated, Approved
+}
+
+enum DepositType {
+        Loan, Insurance
+}
+
+enum IncomeType {
+        Rent, Laundry,Parking,Storage,Others
+}
+enum ExpenseType {
+        Taxes, Insurance,Utility,Maintainance,StaffSalary,Repairs,Others
+}
+
+entity Invoice {
+    generatedDate ZonedDateTime required,
+    paidDate ZonedDateTime,
+    type IncomeType required,
+    amount Double required,
+    status InvoiceStatus required
+}
+
+entity Expense {
+    generatedDate ZonedDateTime required,
+    paidDate ZonedDateTime ,
+    type ExpenseType required,
+    string Vendor,
+    amount Double required,
+    status InvoiceStatus required
+}
+
+entity Deposit {
+    initiatedDate ZonedDateTime required,
+    approvedDate ZonedDateTime required,
+    type DepositType required,
+    amount Double required,
+    status InsuranceStatus required
+}
+
+relationship OneToOne {
+	Tenant{apartment} to Apartment{tenant}   
+}
+
+relationship OneToMany {
+    Mflapartment{apartment} to Apartment{mflapartment}
+    Apartment{invoice} to Invoice{apartment}
+    Apartment{expense} to Expense{apartment}
+    Apartment{deposit} to Deposit{apartment}
+}
+
+relationship ManyToOne {
+    Tenant{user(login)} to User
+}
+

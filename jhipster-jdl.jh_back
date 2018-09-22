@@ -1,0 +1,101 @@
+entity Mflapartment {
+    name String required,
+    address String required
+}
+
+entity Tenant {
+    name String required,
+    address String ,
+    pan String 
+}
+
+enum ApartmentStatus {
+        Empty,Insured,Rented
+}
+
+entity Apartment{
+    unit String required,
+    type String ,
+    status ApartmentStatus
+}
+
+enum InvoiceStatus {
+        Raised, Paid
+}
+
+enum InsuranceStatus {
+        Issued, Approved
+}
+
+entity Invoice {
+    month String required,
+    amount Double required,
+    status InvoiceStatus required
+}
+
+entity Insurance {
+    year String required,
+    amount Double required,
+    status InsuranceStatus required
+}
+
+relationship OneToOne {
+	Tenant{apartment} to Apartment{tenant}   
+}
+
+relationship OneToMany {
+    Mflapartment{apartment} to Apartment{mflapartment}
+    Apartment{invoice} to Invoice{apartment}
+    Apartment{insurance} to Insurance{apartment}
+}
+
+relationship ManyToOne {
+    Tenant{user(login)} to User
+}
+
+entity Owner {
+    name String required
+}
+ 
+entity Pet {
+    name String required,
+    species String required
+}
+ 
+relationship OneToMany {
+    Owner{pet} to Pet{owner}
+}
+
+DEFAULT_MIN = 10
+DEFAULT_MAX = 21
+entity Points { 
+	date ZonedDateTime required,
+	exercise Integer,
+	meals Integer,
+	alchohol Integer,
+	notes String 
+}
+entity Weight { 
+	date ZonedDateTime required,
+	weight Integer
+}
+entity BloodPressure { 
+	date ZonedDateTime required,
+	systolic Integer,
+	diastolic Integer
+}
+enum Units {
+	kg, lb
+}
+entity Preferences { 
+	weeklyGoal Integer required min(DEFAULT_MIN) max(DEFAULT_MAX)
+	weightUnits Units
+}
+relationship ManyToOne {
+	Points{user(login)} to User,
+	Weight{user(login)} to User,
+	BloodPressure{user(login)} to User
+}
+relationship OneToOne {
+	Preferences{user(login)} to User   
+}
