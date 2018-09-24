@@ -1,0 +1,90 @@
+entity Mflapartment {
+    name String required,
+    owner String required,
+    address String required,
+    loanNumber String
+}
+
+entity Tenant {
+    name String required,
+    email String required,
+    uniqueIdentifier String required,
+    address String 
+}
+
+entity Agreement{
+    agreementStartDate LocalDate required,
+    agreementEndDate LocalDate required,
+    agreementDetails Blob
+}
+
+enum ApartmentStatus {
+        Available,Booked,Rented
+}
+
+enum UnitType {
+        OnePlusOne,TwoPlusTwo,SinglePlusOne
+}
+
+entity Apartment{
+    unit String required,
+    type UnitType ,
+    unitStatus ApartmentStatus
+}
+
+enum InvoiceStatus {
+        Generated, Paid
+}
+
+enum DepositStatus {
+        Initiated, Approved
+}
+
+enum DepositType {
+        Loan, Insurance
+}
+
+enum IncomeType {
+        Rent, Laundry,Parking,Storage,Others
+}
+enum ExpenseType {
+        Taxes, Insurance,Utility,Maintainance,StaffSalary,Repairs,Others
+}
+
+enum InvoiceType {
+        Income, Expense
+}
+
+entity Invoice {
+    generatedDate LocalDate required,
+    paidDate LocalDate,
+    type InvoiceType required,
+    incomeCategory IncomeType, 
+    expenseCategory ExpenseType, 
+    amount Double required,
+    invStatus InvoiceStatus required
+}
+
+entity Deposit {
+    initiatedDate LocalDate required,
+    approvedDate LocalDate required,
+    type DepositType required,
+    amount Double required,
+    depStatus DepositStatus required
+}
+
+relationship OneToOne {
+	Agreement{apartment} to Apartment{agreement}   
+	Agreement{tenant} to Tenant{agreement}   
+}
+
+relationship OneToMany {
+    Mflapartment{apartment} to Apartment{mflapartment}
+    Apartment{invoice} to Invoice{apartment}
+    Apartment{deposit} to Deposit{apartment}
+}
+
+relationship ManyToOne {
+    Tenant{user(login)} to User
+}
+
