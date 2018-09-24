@@ -1,0 +1,9 @@
+{
+    "propMgmntApp": {
+        "DepositType" : {
+            "null": "",
+            "Loan": "Loan",
+            "Insurance": "Insurance"
+        }
+    }
+}

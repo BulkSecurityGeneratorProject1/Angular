@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-agreement-heading" jhiTranslate="propMgmntApp.agreement.home.createOrEditLabel">Create or edit a Agreement</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!agreement.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="agreement.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.agreement.agreementStartDate" for="field_agreementStartDate">Agreement Start Date</label>
+                    <div class="input-group">
+                        <input id="field_agreementStartDate" type="text" class="form-control" name="agreementStartDate" ngbDatepicker  #agreementStartDateDp="ngbDatepicker" [(ngModel)]="agreement.agreementStartDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="agreementStartDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.agreementStartDate?.dirty && editForm.controls.agreementStartDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.agreementStartDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.agreement.agreementEndDate" for="field_agreementEndDate">Agreement End Date</label>
+                    <div class="input-group">
+                        <input id="field_agreementEndDate" type="text" class="form-control" name="agreementEndDate" ngbDatepicker  #agreementEndDateDp="ngbDatepicker" [(ngModel)]="agreement.agreementEndDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="agreementEndDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.agreementEndDate?.dirty && editForm.controls.agreementEndDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.agreementEndDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.agreement.agreementDetails" for="field_agreementDetails">Agreement Details</label>
+                    <div>
+                        <div *ngIf="agreement.agreementDetails" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(agreement.agreementDetailsContentType, agreement.agreementDetails)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{agreement.agreementDetailsContentType}}, {{byteSize(agreement.agreementDetails)}}</span>
+                            <button type="button" (click)="agreement.agreementDetails=null;agreement.agreementDetailsContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_agreementDetails" (change)="setFileData($event, agreement, 'agreementDetails', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="agreementDetails" id="field_agreementDetails"
+                        [(ngModel)]="agreement.agreementDetails" />
+                    <input type="hidden" class="form-control" name="agreementDetailsContentType" id="field_agreementDetailsContentType"
+                        [(ngModel)]="agreement.agreementDetailsContentType" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.agreement.apartment" for="field_apartment">Apartment</label>
+                    <select class="form-control" id="field_apartment" name="apartment" [(ngModel)]="agreement.apartment">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="apartmentOption.id === agreement.apartment?.id ? agreement.apartment : apartmentOption" *ngFor="let apartmentOption of apartments; trackBy: trackApartmentById">{{apartmentOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.agreement.tenant" for="field_tenant">Tenant</label>
+                    <select class="form-control" id="field_tenant" name="tenant" [(ngModel)]="agreement.tenant">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="tenantOption.id === agreement.tenant?.id ? agreement.tenant : tenantOption" *ngFor="let tenantOption of tenants; trackBy: trackTenantById">{{tenantOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

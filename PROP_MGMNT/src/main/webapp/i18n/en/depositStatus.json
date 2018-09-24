@@ -1,0 +1,9 @@
+{
+    "propMgmntApp": {
+        "DepositStatus" : {
+            "null": "",
+            "Initiated": "Initiated",
+            "Approved": "Approved"
+        }
+    }
+}

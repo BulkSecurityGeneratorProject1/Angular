@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tenant">
+            <h2><span jhiTranslate="propMgmntApp.tenant.detail.title">Tenant</span> {{tenant.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="propMgmntApp.tenant.name">Name</span></dt>
+                <dd>
+                    <span>{{tenant.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.tenant.email">Email</span></dt>
+                <dd>
+                    <span>{{tenant.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.tenant.uniqueIdentifier">Unique Identifier</span></dt>
+                <dd>
+                    <span>{{tenant.uniqueIdentifier}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.tenant.address">Address</span></dt>
+                <dd>
+                    <span>{{tenant.address}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.tenant.user">User</span></dt>
+                <dd>
+                    {{tenant.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tenant', tenant.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

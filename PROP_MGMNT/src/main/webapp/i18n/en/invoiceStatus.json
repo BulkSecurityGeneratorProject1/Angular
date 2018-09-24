@@ -1,0 +1,9 @@
+{
+    "propMgmntApp": {
+        "InvoiceStatus" : {
+            "null": "",
+            "Generated": "Generated",
+            "Paid": "Paid"
+        }
+    }
+}

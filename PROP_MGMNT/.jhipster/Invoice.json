@@ -1,0 +1,66 @@
+{
+    "name": "Invoice",
+    "fields": [
+        {
+            "fieldName": "generatedDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "paidDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "InvoiceType",
+            "fieldValues": "Income,Expense",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "incomeCategory",
+            "fieldType": "IncomeType",
+            "fieldValues": "Rent,Laundry,Parking,Storage,Others"
+        },
+        {
+            "fieldName": "expenseCategory",
+            "fieldType": "ExpenseType",
+            "fieldValues": "Taxes,Insurance,Utility,Maintainance,StaffSalary,Repairs,Others"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "invStatus",
+            "fieldType": "InvoiceStatus",
+            "fieldValues": "Generated,Paid",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "apartment",
+            "otherEntityName": "apartment",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20180924164603",
+    "entityTableName": "invoice",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

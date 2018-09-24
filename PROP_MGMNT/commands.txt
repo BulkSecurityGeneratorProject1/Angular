@@ -1,3 +1,4 @@
 ./mvnw -Pprod package
 npm install --save ng2-charts
 changed version of jest to 23.5 for running ui lint based tests
+jhipster import-jdl jhipster-jdl.jh

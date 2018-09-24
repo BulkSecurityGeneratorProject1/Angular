@@ -1,0 +1,28 @@
+
+{
+    "propMgmntApp": {
+        "apartment" : {
+            "home": {
+                "title": "Apartments",
+                "createLabel": "Create a new Apartment",
+                "createOrEditLabel": "Create or edit a Apartment"
+            },
+            "created": "A new Apartment is created with identifier {{ param }}",
+            "updated": "A Apartment is updated with identifier {{ param }}",
+            "deleted": "A Apartment is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Apartment {{ id }}?"
+            },
+            "detail": {
+                "title": "Apartment"
+            },
+            "unit": "Unit",
+            "type": "Type",
+            "unitStatus": "Unit Status",
+            "invoice": "Invoice",
+            "deposit": "Deposit",
+            "agreement": "Agreement",
+            "mflapartment": "Mflapartment"
+        }
+    }
+}

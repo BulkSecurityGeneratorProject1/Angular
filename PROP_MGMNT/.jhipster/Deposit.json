@@ -1,0 +1,59 @@
+{
+    "name": "Deposit",
+    "fields": [
+        {
+            "fieldName": "initiatedDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "approvedDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "DepositType",
+            "fieldValues": "Loan,Insurance",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "depStatus",
+            "fieldType": "DepositStatus",
+            "fieldValues": "Initiated,Approved",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "apartment",
+            "otherEntityName": "apartment",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20180924164604",
+    "entityTableName": "deposit",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,51 @@
+{
+    "name": "Agreement",
+    "fields": [
+        {
+            "fieldName": "agreementStartDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "agreementEndDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "agreementDetails",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "apartment",
+            "otherEntityName": "apartment",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "agreement"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "tenant",
+            "otherEntityName": "tenant",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "agreement"
+        }
+    ],
+    "changelogDate": "20180924164601",
+    "entityTableName": "agreement",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

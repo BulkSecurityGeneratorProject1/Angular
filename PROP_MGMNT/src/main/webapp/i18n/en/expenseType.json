@@ -1,0 +1,14 @@
+{
+    "propMgmntApp": {
+        "ExpenseType" : {
+            "null": "",
+            "Taxes": "Taxes",
+            "Insurance": "Insurance",
+            "Utility": "Utility",
+            "Maintainance": "Maintainance",
+            "StaffSalary": "StaffSalary",
+            "Repairs": "Repairs",
+            "Others": "Others"
+        }
+    }
+}

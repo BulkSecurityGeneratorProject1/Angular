@@ -1,0 +1,27 @@
+
+{
+    "propMgmntApp": {
+        "deposit" : {
+            "home": {
+                "title": "Deposits",
+                "createLabel": "Create a new Deposit",
+                "createOrEditLabel": "Create or edit a Deposit"
+            },
+            "created": "A new Deposit is created with identifier {{ param }}",
+            "updated": "A Deposit is updated with identifier {{ param }}",
+            "deleted": "A Deposit is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Deposit {{ id }}?"
+            },
+            "detail": {
+                "title": "Deposit"
+            },
+            "initiatedDate": "Initiated Date",
+            "approvedDate": "Approved Date",
+            "type": "Type",
+            "amount": "Amount",
+            "depStatus": "Dep Status",
+            "apartment": "Apartment"
+        }
+    }
+}

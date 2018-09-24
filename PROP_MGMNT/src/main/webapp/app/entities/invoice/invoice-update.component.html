@@ -1,0 +1,120 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-invoice-heading" jhiTranslate="propMgmntApp.invoice.home.createOrEditLabel">Create or edit a Invoice</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!invoice.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="invoice.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.generatedDate" for="field_generatedDate">Generated Date</label>
+                    <div class="input-group">
+                        <input id="field_generatedDate" type="text" class="form-control" name="generatedDate" ngbDatepicker  #generatedDateDp="ngbDatepicker" [(ngModel)]="invoice.generatedDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="generatedDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.generatedDate?.dirty && editForm.controls.generatedDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.generatedDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.paidDate" for="field_paidDate">Paid Date</label>
+                    <div class="input-group">
+                        <input id="field_paidDate" type="text" class="form-control" name="paidDate" ngbDatepicker  #paidDateDp="ngbDatepicker" [(ngModel)]="invoice.paidDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="paidDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.type" for="field_type">Type</label>
+                    <select class="form-control" name="type" [(ngModel)]="invoice.type" id="field_type"  required>
+                        <option value="Income">{{'propMgmntApp.InvoiceType.Income' | translate}}</option>
+                        <option value="Expense">{{'propMgmntApp.InvoiceType.Expense' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.incomeCategory" for="field_incomeCategory">Income Category</label>
+                    <select class="form-control" name="incomeCategory" [(ngModel)]="invoice.incomeCategory" id="field_incomeCategory" >
+                        <option value="Rent">{{'propMgmntApp.IncomeType.Rent' | translate}}</option>
+                        <option value="Laundry">{{'propMgmntApp.IncomeType.Laundry' | translate}}</option>
+                        <option value="Parking">{{'propMgmntApp.IncomeType.Parking' | translate}}</option>
+                        <option value="Storage">{{'propMgmntApp.IncomeType.Storage' | translate}}</option>
+                        <option value="Others">{{'propMgmntApp.IncomeType.Others' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.expenseCategory" for="field_expenseCategory">Expense Category</label>
+                    <select class="form-control" name="expenseCategory" [(ngModel)]="invoice.expenseCategory" id="field_expenseCategory" >
+                        <option value="Taxes">{{'propMgmntApp.ExpenseType.Taxes' | translate}}</option>
+                        <option value="Insurance">{{'propMgmntApp.ExpenseType.Insurance' | translate}}</option>
+                        <option value="Utility">{{'propMgmntApp.ExpenseType.Utility' | translate}}</option>
+                        <option value="Maintainance">{{'propMgmntApp.ExpenseType.Maintainance' | translate}}</option>
+                        <option value="StaffSalary">{{'propMgmntApp.ExpenseType.StaffSalary' | translate}}</option>
+                        <option value="Repairs">{{'propMgmntApp.ExpenseType.Repairs' | translate}}</option>
+                        <option value="Others">{{'propMgmntApp.ExpenseType.Others' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="invoice.amount" required/>
+                    <div [hidden]="!(editForm.controls.amount?.dirty && editForm.controls.amount?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.amount?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.amount?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.invStatus" for="field_invStatus">Inv Status</label>
+                    <select class="form-control" name="invStatus" [(ngModel)]="invoice.invStatus" id="field_invStatus"  required>
+                        <option value="Generated">{{'propMgmntApp.InvoiceStatus.Generated' | translate}}</option>
+                        <option value="Paid">{{'propMgmntApp.InvoiceStatus.Paid' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.invStatus?.dirty && editForm.controls.invStatus?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.invStatus?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.invoice.apartment" for="field_apartment">Apartment</label>
+                    <select class="form-control" id="field_apartment" name="apartment" [(ngModel)]="invoice.apartment" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="apartmentOption.id === invoice.apartment?.id ? invoice.apartment : apartmentOption" *ngFor="let apartmentOption of apartments; trackBy: trackApartmentById">{{apartmentOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

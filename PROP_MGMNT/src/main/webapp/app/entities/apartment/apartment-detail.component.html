@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="apartment">
+            <h2><span jhiTranslate="propMgmntApp.apartment.detail.title">Apartment</span> {{apartment.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="propMgmntApp.apartment.unit">Unit</span></dt>
+                <dd>
+                    <span>{{apartment.unit}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.apartment.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.UnitType.' + apartment.type}}">{{apartment.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.apartment.unitStatus">Unit Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.ApartmentStatus.' + apartment.unitStatus}}">{{apartment.unitStatus}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.apartment.mflapartment">Mflapartment</span></dt>
+                <dd>
+                    <div *ngIf="apartment.mflapartment">
+                        <a [routerLink]="['/mflapartment', apartment.mflapartment?.id, 'view']">{{apartment.mflapartment?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/apartment', apartment.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+{
+    "propMgmntApp": {
+        "InvoiceType" : {
+            "null": "",
+            "Income": "Income",
+            "Expense": "Expense"
+        }
+    }
+}

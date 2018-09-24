@@ -1,0 +1,64 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="propMgmntApp.apartment.home.title">Apartments</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-apartment" [routerLink]="['/apartment/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="propMgmntApp.apartment.home.createLabel">
+            Create new Apartment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="apartments">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="propMgmntApp.apartment.unit">Unit</span></th>
+            <th><span jhiTranslate="propMgmntApp.apartment.type">Type</span></th>
+            <th><span jhiTranslate="propMgmntApp.apartment.unitStatus">Unit Status</span></th>
+            <th><span jhiTranslate="propMgmntApp.apartment.mflapartment">Mflapartment</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let apartment of apartments ;trackBy: trackId">
+                <td><a [routerLink]="['/apartment', apartment.id, 'view' ]">{{apartment.id}}</a></td>
+                <td>{{apartment.unit}}</td>
+                <td jhiTranslate="{{'propMgmntApp.UnitType.' + apartment.type}}">{{apartment.type}}</td>
+                <td jhiTranslate="{{'propMgmntApp.ApartmentStatus.' + apartment.unitStatus}}">{{apartment.unitStatus}}</td>
+                <td>
+                    <div *ngIf="apartment.mflapartment">
+                        <a [routerLink]="['../mflapartment', apartment.mflapartment?.id, 'view' ]" >{{apartment.mflapartment?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/apartment', apartment.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/apartment', apartment.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'apartment/'+ apartment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

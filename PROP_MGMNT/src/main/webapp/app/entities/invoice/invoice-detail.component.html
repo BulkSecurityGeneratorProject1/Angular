@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="invoice">
+            <h2><span jhiTranslate="propMgmntApp.invoice.detail.title">Invoice</span> {{invoice.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="propMgmntApp.invoice.generatedDate">Generated Date</span></dt>
+                <dd>
+                    <span>{{invoice.generatedDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.paidDate">Paid Date</span></dt>
+                <dd>
+                    <span>{{invoice.paidDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.InvoiceType.' + invoice.type}}">{{invoice.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.incomeCategory">Income Category</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.IncomeType.' + invoice.incomeCategory}}">{{invoice.incomeCategory}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.expenseCategory">Expense Category</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.ExpenseType.' + invoice.expenseCategory}}">{{invoice.expenseCategory}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.amount">Amount</span></dt>
+                <dd>
+                    <span>{{invoice.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.invStatus">Inv Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.InvoiceStatus.' + invoice.invStatus}}">{{invoice.invStatus}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.invoice.apartment">Apartment</span></dt>
+                <dd>
+                    <div *ngIf="invoice.apartment">
+                        <a [routerLink]="['/apartment', invoice.apartment?.id, 'view']">{{invoice.apartment?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/invoice', invoice.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

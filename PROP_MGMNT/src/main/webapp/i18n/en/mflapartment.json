@@ -1,0 +1,26 @@
+
+{
+    "propMgmntApp": {
+        "mflapartment" : {
+            "home": {
+                "title": "Mflapartments",
+                "createLabel": "Create a new Mflapartment",
+                "createOrEditLabel": "Create or edit a Mflapartment"
+            },
+            "created": "A new Mflapartment is created with identifier {{ param }}",
+            "updated": "A Mflapartment is updated with identifier {{ param }}",
+            "deleted": "A Mflapartment is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Mflapartment {{ id }}?"
+            },
+            "detail": {
+                "title": "Mflapartment"
+            },
+            "name": "Name",
+            "owner": "Owner",
+            "address": "Address",
+            "loanNumber": "Loan Number",
+            "apartment": "Apartment"
+        }
+    }
+}

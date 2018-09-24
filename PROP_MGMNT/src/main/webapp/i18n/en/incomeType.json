@@ -1,0 +1,12 @@
+{
+    "propMgmntApp": {
+        "IncomeType" : {
+            "null": "",
+            "Rent": "Rent",
+            "Laundry": "Laundry",
+            "Parking": "Parking",
+            "Storage": "Storage",
+            "Others": "Others"
+        }
+    }
+}

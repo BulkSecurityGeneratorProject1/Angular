@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-deposit-heading" jhiTranslate="propMgmntApp.deposit.home.createOrEditLabel">Create or edit a Deposit</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!deposit.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="deposit.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.deposit.initiatedDate" for="field_initiatedDate">Initiated Date</label>
+                    <div class="input-group">
+                        <input id="field_initiatedDate" type="text" class="form-control" name="initiatedDate" ngbDatepicker  #initiatedDateDp="ngbDatepicker" [(ngModel)]="deposit.initiatedDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="initiatedDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.initiatedDate?.dirty && editForm.controls.initiatedDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.initiatedDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.deposit.approvedDate" for="field_approvedDate">Approved Date</label>
+                    <div class="input-group">
+                        <input id="field_approvedDate" type="text" class="form-control" name="approvedDate" ngbDatepicker  #approvedDateDp="ngbDatepicker" [(ngModel)]="deposit.approvedDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="approvedDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.approvedDate?.dirty && editForm.controls.approvedDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.approvedDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.deposit.type" for="field_type">Type</label>
+                    <select class="form-control" name="type" [(ngModel)]="deposit.type" id="field_type"  required>
+                        <option value="Loan">{{'propMgmntApp.DepositType.Loan' | translate}}</option>
+                        <option value="Insurance">{{'propMgmntApp.DepositType.Insurance' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.deposit.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="deposit.amount" required/>
+                    <div [hidden]="!(editForm.controls.amount?.dirty && editForm.controls.amount?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.amount?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.amount?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.deposit.depStatus" for="field_depStatus">Dep Status</label>
+                    <select class="form-control" name="depStatus" [(ngModel)]="deposit.depStatus" id="field_depStatus"  required>
+                        <option value="Initiated">{{'propMgmntApp.DepositStatus.Initiated' | translate}}</option>
+                        <option value="Approved">{{'propMgmntApp.DepositStatus.Approved' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.depStatus?.dirty && editForm.controls.depStatus?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.depStatus?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.deposit.apartment" for="field_apartment">Apartment</label>
+                    <select class="form-control" id="field_apartment" name="apartment" [(ngModel)]="deposit.apartment" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="apartmentOption.id === deposit.apartment?.id ? deposit.apartment : apartmentOption" *ngFor="let apartmentOption of apartments; trackBy: trackApartmentById">{{apartmentOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

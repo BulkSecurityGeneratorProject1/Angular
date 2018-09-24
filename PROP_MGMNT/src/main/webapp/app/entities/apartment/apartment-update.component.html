@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-apartment-heading" jhiTranslate="propMgmntApp.apartment.home.createOrEditLabel">Create or edit a Apartment</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!apartment.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="apartment.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.apartment.unit" for="field_unit">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="field_unit"
+                        [(ngModel)]="apartment.unit" required/>
+                    <div [hidden]="!(editForm.controls.unit?.dirty && editForm.controls.unit?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.unit?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.apartment.type" for="field_type">Type</label>
+                    <select class="form-control" name="type" [(ngModel)]="apartment.type" id="field_type" >
+                        <option value="OnePlusOne">{{'propMgmntApp.UnitType.OnePlusOne' | translate}}</option>
+                        <option value="TwoPlusTwo">{{'propMgmntApp.UnitType.TwoPlusTwo' | translate}}</option>
+                        <option value="SinglePlusOne">{{'propMgmntApp.UnitType.SinglePlusOne' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.apartment.unitStatus" for="field_unitStatus">Unit Status</label>
+                    <select class="form-control" name="unitStatus" [(ngModel)]="apartment.unitStatus" id="field_unitStatus" >
+                        <option value="Available">{{'propMgmntApp.ApartmentStatus.Available' | translate}}</option>
+                        <option value="Booked">{{'propMgmntApp.ApartmentStatus.Booked' | translate}}</option>
+                        <option value="Rented">{{'propMgmntApp.ApartmentStatus.Rented' | translate}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="propMgmntApp.apartment.mflapartment" for="field_mflapartment">Mflapartment</label>
+                    <select class="form-control" id="field_mflapartment" name="mflapartment" [(ngModel)]="apartment.mflapartment" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="mflapartmentOption.id === apartment.mflapartment?.id ? apartment.mflapartment : mflapartmentOption" *ngFor="let mflapartmentOption of mflapartments; trackBy: trackMflapartmentById">{{mflapartmentOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

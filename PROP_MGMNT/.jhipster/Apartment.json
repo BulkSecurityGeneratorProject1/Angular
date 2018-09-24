@@ -1,0 +1,58 @@
+{
+    "name": "Apartment",
+    "fields": [
+        {
+            "fieldName": "unit",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "UnitType",
+            "fieldValues": "OnePlusOne,TwoPlusTwo,SinglePlusOne"
+        },
+        {
+            "fieldName": "unitStatus",
+            "fieldType": "ApartmentStatus",
+            "fieldValues": "Available,Booked,Rented"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "invoice",
+            "otherEntityName": "invoice",
+            "otherEntityRelationshipName": "apartment"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "deposit",
+            "otherEntityName": "deposit",
+            "otherEntityRelationshipName": "apartment"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "agreement",
+            "otherEntityName": "agreement",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "apartment"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "mflapartment",
+            "otherEntityName": "mflapartment",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20180924164602",
+    "entityTableName": "apartment",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="deposit">
+            <h2><span jhiTranslate="propMgmntApp.deposit.detail.title">Deposit</span> {{deposit.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="propMgmntApp.deposit.initiatedDate">Initiated Date</span></dt>
+                <dd>
+                    <span>{{deposit.initiatedDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.deposit.approvedDate">Approved Date</span></dt>
+                <dd>
+                    <span>{{deposit.approvedDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.deposit.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.DepositType.' + deposit.type}}">{{deposit.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.deposit.amount">Amount</span></dt>
+                <dd>
+                    <span>{{deposit.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.deposit.depStatus">Dep Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'propMgmntApp.DepositStatus.' + deposit.depStatus}}">{{deposit.depStatus}}</span>
+                </dd>
+                <dt><span jhiTranslate="propMgmntApp.deposit.apartment">Apartment</span></dt>
+                <dd>
+                    <div *ngIf="deposit.apartment">
+                        <a [routerLink]="['/apartment', deposit.apartment?.id, 'view']">{{deposit.apartment?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/deposit', deposit.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

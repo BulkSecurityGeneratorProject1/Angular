@@ -1,0 +1,10 @@
+{
+    "propMgmntApp": {
+        "ApartmentStatus" : {
+            "null": "",
+            "Available": "Available",
+            "Booked": "Booked",
+            "Rented": "Rented"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "propMgmntApp": {
+        "UnitType" : {
+            "null": "",
+            "OnePlusOne": "OnePlusOne",
+            "TwoPlusTwo": "TwoPlusTwo",
+            "SinglePlusOne": "SinglePlusOne"
+        }
+    }
+}
