@@ -1,7 +1,7 @@
 entity Mflapartment {
     name String required,
     owner String required,
-    address String required
+    address String required,
     loanNumber String
 }
 
