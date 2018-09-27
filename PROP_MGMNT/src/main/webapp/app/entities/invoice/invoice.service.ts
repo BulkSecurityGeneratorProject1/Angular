@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<IInvoice[]>;
 @Injectable({ providedIn: 'root' })
 export class InvoiceService {
     private resourceUrl = SERVER_API_URL + 'api/invoices';
+    private resourceUrl2 = SERVER_API_URL + 'api/invoices-this-month';
 
     constructor(private http: HttpClient) {}
 
@@ -42,6 +43,13 @@ export class InvoiceService {
         return this.http
             .get<IInvoice[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res));
+    }
+
+    thisMonth(req?: any): Observable<EntityResponseType> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<IInvoice>(this.resourceUrl2, { params: options, observe: 'response' })
+            .map((res: EntityResponseType) => this.convertDateFromServer(res));
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

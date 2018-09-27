@@ -16,6 +16,7 @@ import { PropMgmntAppRoutingModule } from './app-routing.module';
 import { PropMgmntHomeModule } from './home/home.module';
 import { PropMgmntAccountModule } from './account/account.module';
 import { PropMgmntEntityModule } from './entities/entity.module';
+import { ChartsModule } from 'ng2-charts';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
 
@@ -28,7 +29,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         PropMgmntCoreModule,
         PropMgmntHomeModule,
         PropMgmntAccountModule,
-        PropMgmntEntityModule
+        PropMgmntEntityModule,
+        ChartsModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],

@@ -3,9 +3,10 @@ import { RouterModule } from '@angular/router';
 
 import { PropMgmntSharedModule } from 'app/shared';
 import { HOME_ROUTE, HomeComponent } from './';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
-    imports: [PropMgmntSharedModule, RouterModule.forChild([HOME_ROUTE])],
+    imports: [PropMgmntSharedModule, ChartsModule, RouterModule.forChild([HOME_ROUTE])],
     declarations: [HomeComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

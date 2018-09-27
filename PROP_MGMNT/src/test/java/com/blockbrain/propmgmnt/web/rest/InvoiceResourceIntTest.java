@@ -1,10 +1,22 @@
 package com.blockbrain.propmgmnt.web.rest;
 
-import com.blockbrain.propmgmnt.PropMgmntApp;
+import static com.blockbrain.propmgmnt.web.rest.TestUtil.createFormattingConversionService;
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.blockbrain.propmgmnt.domain.Invoice;
-import com.blockbrain.propmgmnt.repository.InvoiceRepository;
-import com.blockbrain.propmgmnt.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,22 +32,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
-
-
-import static com.blockbrain.propmgmnt.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.blockbrain.propmgmnt.domain.enumeration.InvoiceType;
-import com.blockbrain.propmgmnt.domain.enumeration.IncomeType;
+import com.blockbrain.propmgmnt.PropMgmntApp;
+import com.blockbrain.propmgmnt.domain.Invoice;
+import com.blockbrain.propmgmnt.domain.User;
 import com.blockbrain.propmgmnt.domain.enumeration.ExpenseType;
+import com.blockbrain.propmgmnt.domain.enumeration.IncomeType;
 import com.blockbrain.propmgmnt.domain.enumeration.InvoiceStatus;
+import com.blockbrain.propmgmnt.domain.enumeration.InvoiceType;
+import com.blockbrain.propmgmnt.repository.InvoiceRepository;
+import com.blockbrain.propmgmnt.repository.UserRepository;
+import com.blockbrain.propmgmnt.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the InvoiceResource REST controller.
  *
@@ -85,6 +91,10 @@ public class InvoiceResourceIntTest {
     private MockMvc restInvoiceMockMvc;
 
     private Invoice invoice;
+    
+    @Autowired
+    private UserRepository userRepository;
+
 
     @Before
     public void setup() {
@@ -254,6 +264,79 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].invStatus").value(hasItem(DEFAULT_INV_STATUS.toString())));
     }
+    
+    
+    @Test
+    @Transactional
+    public void getAllInvoicesThisMonth() throws Exception {
+        // Initialize the database
+        LocalDate today = LocalDate.now();
+        LocalDate thisMonth = today.with(firstDayOfMonth());
+        LocalDate lastMonth = thisMonth.minusMonths(1);
+        createIncomeByMonth(thisMonth, lastMonth);
+       // invoiceRepository.saveAndFlush(invoice);
+
+        // Get all the invoiceList
+        restInvoiceMockMvc.perform(get("/api/invoices-this-month?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+            /*.andExpect(jsonPath("$.[*].id").value(hasItem(invoice.getId().intValue())))
+            .andExpect(jsonPath("$.[*].generatedDate").value(hasItem(DEFAULT_GENERATED_DATE.toString())))*/
+/*            .andExpect(jsonPath("$.[*].paidDate").value(hasItem(DEFAULT_PAID_DATE.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].incomeCategory").value(hasItem(DEFAULT_INCOME_CATEGORY.toString())))
+            .andExpect(jsonPath("$.[*].expenseCategory").value(hasItem(DEFAULT_EXPENSE_CATEGORY.toString())))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].invStatus").value(hasItem(DEFAULT_INV_STATUS.toString())));*/
+    }
+    
+    
+    private void createIncomeByMonth(LocalDate thisMonth, LocalDate lastMonth) {
+    	User user = userRepository.findOneByLogin("user").get();
+    	// Create Income in two separate months
+    	
+        Invoice invoice = new Invoice()
+                .generatedDate(thisMonth.plusDays(2))
+                .paidDate(DEFAULT_PAID_DATE)
+                .type(DEFAULT_TYPE)
+                .incomeCategory(DEFAULT_INCOME_CATEGORY)
+                .expenseCategory(DEFAULT_EXPENSE_CATEGORY)
+                .amount(DEFAULT_AMOUNT)
+                .invStatus(DEFAULT_INV_STATUS);
+        invoiceRepository.saveAndFlush(invoice);
+        
+        invoice = new Invoice()
+                .generatedDate(thisMonth.plusDays(3))
+                .paidDate(DEFAULT_PAID_DATE)
+                .type(DEFAULT_TYPE)
+                .incomeCategory(DEFAULT_INCOME_CATEGORY)
+                .expenseCategory(DEFAULT_EXPENSE_CATEGORY)
+                .amount(DEFAULT_AMOUNT)
+                .invStatus(DEFAULT_INV_STATUS);
+        invoiceRepository.saveAndFlush(invoice);
+        
+        invoice = new Invoice()
+                .generatedDate(lastMonth.plusDays(3))
+                .paidDate(DEFAULT_PAID_DATE)
+                .type(DEFAULT_TYPE)
+                .incomeCategory(DEFAULT_INCOME_CATEGORY)
+                .expenseCategory(DEFAULT_EXPENSE_CATEGORY)
+                .amount(DEFAULT_AMOUNT)
+                .invStatus(DEFAULT_INV_STATUS);
+        invoiceRepository.saveAndFlush(invoice);
+        
+        invoice = new Invoice()
+                .generatedDate(lastMonth.plusDays(4))
+                .paidDate(DEFAULT_PAID_DATE)
+                .type(DEFAULT_TYPE)
+                .incomeCategory(DEFAULT_INCOME_CATEGORY)
+                .expenseCategory(DEFAULT_EXPENSE_CATEGORY)
+                .amount(DEFAULT_AMOUNT)
+                .invStatus(DEFAULT_INV_STATUS);
+        invoiceRepository.saveAndFlush(invoice);
+
+
+    	}
     
 
     @Test

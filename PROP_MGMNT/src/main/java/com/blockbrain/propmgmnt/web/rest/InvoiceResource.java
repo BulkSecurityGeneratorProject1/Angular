@@ -1,22 +1,42 @@
 package com.blockbrain.propmgmnt.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.blockbrain.propmgmnt.domain.Invoice;
-import com.blockbrain.propmgmnt.repository.InvoiceRepository;
-import com.blockbrain.propmgmnt.web.rest.errors.BadRequestAlertException;
-import com.blockbrain.propmgmnt.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
+import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.blockbrain.propmgmnt.domain.Invoice;
+import com.blockbrain.propmgmnt.domain.enumeration.InvoiceType;
+import com.blockbrain.propmgmnt.repository.InvoiceRepository;
+import com.blockbrain.propmgmnt.web.rest.errors.BadRequestAlertException;
+import com.blockbrain.propmgmnt.web.rest.util.HeaderUtil;
+import com.blockbrain.propmgmnt.web.rest.vm.IncomeExpenseStatistics;
+import com.blockbrain.propmgmnt.web.rest.vm.MonthWiseIncomeExpenseStatistics;
+import com.codahale.metrics.annotation.Timed;
 
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Invoice.
@@ -88,7 +108,60 @@ public class InvoiceResource {
         log.debug("REST request to get all Invoices");
         return invoiceRepository.findAll();
     }
-
+    
+    /**
+     * GET  /invoices : get all the invoices for this month.
+     
+     * @return the ResponseEntity with status 200 (OK) and the list of invoices in body
+     */
+    
+    @GetMapping("/invoices-this-month")
+    @Timed
+    public IncomeExpenseStatistics getAllInvoicesThisMonth() {
+        log.debug("REST request to get all Invoices");
+        LocalDate today = LocalDate.now();
+        Month currentMonth = today.getMonth();
+        
+        int currentYear = today.getYear();
+        LocalDate firstDayOfMonth = today.with(firstDayOfMonth());
+        LocalDate lastDayOfMonth = today.with(lastDayOfMonth());
+        
+        LocalDate firstDay = today.with(firstDayOfYear()); // 2015-01-01          
+        LocalDate lastDay = today.with(lastDayOfYear()); // 2015-12-31
+        
+        IncomeExpenseStatistics incomeExpenseStatistics = new IncomeExpenseStatistics(currentMonth,currentYear);
+        List<MonthWiseIncomeExpenseStatistics> monthwiseList = invoiceRepository.getMonthlyScheduleAdherenceBySection(firstDay, lastDay);
+        System.out.println("monthwiseList size is" + monthwiseList.size());
+        
+        incomeExpenseStatistics.setMonthWiseIncomeExpenseStatistics(monthwiseList);
+        
+        
+        List<Invoice> readings =
+        		invoiceRepository.findByGeneratedDateAfterAndGeneratedDateBefore(firstDayOfMonth,
+        				lastDayOfMonth);
+       
+        for(Invoice inv:readings)
+        {
+        	if(inv.getType().equals(InvoiceType.Income))
+        		incomeExpenseStatistics.setTotalMonthlyIncome(incomeExpenseStatistics.getTotalMonthlyIncome()+inv.getAmount());
+        	else
+        		incomeExpenseStatistics.setTotalMonthlyExpense(incomeExpenseStatistics.getTotalMonthlyExpense()+inv.getAmount());
+        }
+        
+        
+        List<Invoice> yearlyreadings =
+        		invoiceRepository.findByGeneratedDateAfterAndGeneratedDateBefore(firstDay,
+        				lastDay);
+        for(Invoice inv:yearlyreadings)
+        {
+        	if(inv.getType().equals(InvoiceType.Income))
+        		incomeExpenseStatistics.setTotalYearlyIncome(incomeExpenseStatistics.getTotalYearlyIncome()+inv.getAmount());
+        	else
+        		incomeExpenseStatistics.setTotalYearlyExpense(incomeExpenseStatistics.getTotalYearlyExpense()+inv.getAmount());
+        }
+        return incomeExpenseStatistics;
+        
+    }
     /**
      * GET  /invoices/:id : get the "id" invoice.
      *
