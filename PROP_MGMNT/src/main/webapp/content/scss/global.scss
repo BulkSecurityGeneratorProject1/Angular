@@ -229,3 +229,36 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.main-img-background {
+    background: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: calc(100vh - 62px);
+    z-index: -2;
+}
+
+.main-img-blurbackground {
+    background: #000;
+    opacity: 0.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: -1;
+    min-height: calc(100vh - 62px);
+}
+
+.main-card-background {
+    background: transparent !important;
+    border: none !important;
+}
+
+body {
+    background: #fefefe !important;
+}
