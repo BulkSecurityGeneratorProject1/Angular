@@ -26,8 +26,10 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 	        + " new com.blockbrain.propmgmnt.web.rest.vm.MonthWiseIncomeExpenseStatistics(Month(invoice.generatedDate), SUM(invoice.amount))"
 	        + " FROM Invoice invoice" 
 	        + " WHERE invoice.generatedDate BETWEEN :startDate AND :endDate"
-	        + " GROUP BY Month(invoice.generatedDate)")
-	public List <MonthWiseIncomeExpenseStatistics> getMonthlyScheduleAdherenceBySection(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+	        + " AND JHI_TYPE = :type"
+	        + " GROUP BY Month(invoice.generatedDate) ORDER BY Month(invoice.generatedDate) DESC")
+	public List <MonthWiseIncomeExpenseStatistics> getMonthlyScheduleAdherenceBySection(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,
+			@Param("type") String type);
 	
 
 }

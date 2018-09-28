@@ -40,13 +40,31 @@ export class HomeComponent implements OnInit {
         scaleShowVerticalLines: false,
         responsive: true,
         title: {
-            text: 'Yearly Income/Expense Distribution',
+            text: 'MonthWise Income Distribution',
             display: true
+        },
+        scales: {
+            yAxes: [{ id: 'y-axis-1', type: 'linear', position: 'left', ticks: { min: 0 } }]
         }
     };
 
     public barchartdata = [0];
     public barChartLabels: string[] = [];
+
+    public expbarChartOptions: any = {
+        scaleShowVerticalLines: false,
+        responsive: true,
+        title: {
+            text: 'MonthWise Expense Distribution',
+            display: true
+        },
+        scales: {
+            yAxes: [{ id: 'y-axis-1', type: 'linear', position: 'left', ticks: { min: 0 } }]
+        }
+    };
+
+    public expbarchartdata = [0];
+    public expbarChartLabels: string[] = [];
 
     /*public lineChartData:any[] = [
         {data: [65], label: 'Series A'},
@@ -91,9 +109,15 @@ export class HomeComponent implements OnInit {
                 //this.monthlyChartOptions.Options.title.text = "September";
 
                 this.barchartdata = [];
-                for (let i = res.body.monthWiseIncomeExpenseStatistics.length - 1; i >= 0; i--) {
-                    this.barchartdata.push(res.body.monthWiseIncomeExpenseStatistics[i].actualTotal);
-                    this.barChartLabels.push(res.body.monthWiseIncomeExpenseStatistics[i].month);
+                for (let i = res.body.monthWiseIncomeStatistics.length - 1; i >= 0; i--) {
+                    this.barchartdata.push(res.body.monthWiseIncomeStatistics[i].actualTotal);
+                    this.barChartLabels.push(res.body.monthWiseIncomeStatistics[i].monthText);
+                }
+
+                this.expbarchartdata = [];
+                for (let i = res.body.monthWiseExpenseStatistics.length - 1; i >= 0; i--) {
+                    this.expbarchartdata.push(res.body.monthWiseExpenseStatistics[i].actualTotal);
+                    this.expbarChartLabels.push(res.body.monthWiseExpenseStatistics[i].monthText);
                 }
             },
             (res: HttpErrorResponse) => this.onError(res.message)

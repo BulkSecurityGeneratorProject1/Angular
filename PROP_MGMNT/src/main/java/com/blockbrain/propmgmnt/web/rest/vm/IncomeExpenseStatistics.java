@@ -13,11 +13,11 @@ private Month month;
 private int year;
 private Double totalMonthlyIncome;
 private Double totalMonthlyExpense;
-private List<MonthWiseIncomeExpenseStatistics> monthWiseIncomeExpenseStatistics;
+private List<MonthWiseIncomeExpenseStatistics> monthWiseIncomeStatistics;
+
+private List<MonthWiseIncomeExpenseStatistics> monthWiseExpenseStatistics;
 
 private Double totalYearlyIncome;
-
-
 private Double totalYearlyExpense;
 
 public IncomeExpenseStatistics(Month month, int year) {
@@ -27,15 +27,24 @@ public IncomeExpenseStatistics(Month month, int year) {
 		this.totalMonthlyExpense = 0.0;
 		this.totalYearlyIncome = 0.0;
 		this.totalYearlyExpense = 0.0;
-		this.monthWiseIncomeExpenseStatistics = new ArrayList<MonthWiseIncomeExpenseStatistics>();
-}
-public List<MonthWiseIncomeExpenseStatistics> getMonthWiseIncomeExpenseStatistics() {
-	return monthWiseIncomeExpenseStatistics;
+		this.monthWiseIncomeStatistics = new ArrayList<MonthWiseIncomeExpenseStatistics>();
+		this.monthWiseExpenseStatistics = new ArrayList<MonthWiseIncomeExpenseStatistics>();
 }
 
-public void setMonthWiseIncomeExpenseStatistics(
-		List<MonthWiseIncomeExpenseStatistics> monthWiseIncomeExpenseStatistics) {
-	this.monthWiseIncomeExpenseStatistics = monthWiseIncomeExpenseStatistics;
+public List<MonthWiseIncomeExpenseStatistics> getMonthWiseIncomeStatistics() {
+	return monthWiseIncomeStatistics;
+}
+
+public void setMonthWiseIncomeStatistics(List<MonthWiseIncomeExpenseStatistics> monthWiseIncomeStatistics) {
+	this.monthWiseIncomeStatistics = monthWiseIncomeStatistics;
+}
+
+public List<MonthWiseIncomeExpenseStatistics> getMonthWiseExpenseStatistics() {
+	return monthWiseExpenseStatistics;
+}
+
+public void setMonthWiseExpenseStatistics(List<MonthWiseIncomeExpenseStatistics> monthWiseExpenseStatistics) {
+	this.monthWiseExpenseStatistics = monthWiseExpenseStatistics;
 }
 
 public Double getTotalYearlyIncome() {

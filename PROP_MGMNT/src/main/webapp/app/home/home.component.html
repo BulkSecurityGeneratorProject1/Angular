@@ -42,12 +42,24 @@
                             [data]="barchartdata"
                             [options]="barChartOptions"
                             [labels]="barChartLabels"
-                            [legend]="true"
+                            [legend]="false"
                             [chartType]="'bar'"
                             >
                         </canvas>
                         </div>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card card-shadow p-3">
+                    <canvas baseChart
+                        [data]="expbarchartdata"
+                        [options]="expbarChartOptions"
+                        [labels]="expbarChartLabels"
+                        [legend]="false"
+                        [chartType]="'bar'"
+                        >
+                    </canvas>
+                    </div>
+                </div>
             </div>
 
             <div *ngSwitchCase="false">

@@ -10,7 +10,9 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -130,11 +132,28 @@ public class InvoiceResource {
         LocalDate lastDay = today.with(lastDayOfYear()); // 2015-12-31
         
         IncomeExpenseStatistics incomeExpenseStatistics = new IncomeExpenseStatistics(currentMonth,currentYear);
-        List<MonthWiseIncomeExpenseStatistics> monthwiseList = invoiceRepository.getMonthlyScheduleAdherenceBySection(firstDay, lastDay);
-        System.out.println("monthwiseList size is" + monthwiseList.size());
         
-        incomeExpenseStatistics.setMonthWiseIncomeExpenseStatistics(monthwiseList);
+        List<MonthWiseIncomeExpenseStatistics> monthwiseIncomeList = invoiceRepository.getMonthlyScheduleAdherenceBySection(firstDay, lastDay,"Income");
+        System.out.println("monthwiseIncomeList size is" + monthwiseIncomeList.size());
         
+        for(MonthWiseIncomeExpenseStatistics stats:monthwiseIncomeList)
+        {
+        	Month day = Month.of(stats.getMonth());
+        	stats.setMonthText(day.getDisplayName(TextStyle.SHORT,Locale.ENGLISH));
+        }
+        
+        incomeExpenseStatistics.setMonthWiseIncomeStatistics(monthwiseIncomeList);
+        
+        List<MonthWiseIncomeExpenseStatistics> monthwiseExpenseList = invoiceRepository.getMonthlyScheduleAdherenceBySection(firstDay, lastDay,"Expense");
+        System.out.println("monthwiseExpenseList size is" + monthwiseExpenseList.size());
+        
+        for(MonthWiseIncomeExpenseStatistics stats:monthwiseExpenseList)
+        {
+        	Month day = Month.of(stats.getMonth());
+        	stats.setMonthText(day.getDisplayName(TextStyle.SHORT,Locale.ENGLISH));
+        }
+        
+        incomeExpenseStatistics.setMonthWiseExpenseStatistics(monthwiseExpenseList);
         
         List<Invoice> readings =
         		invoiceRepository.findByGeneratedDateAfterAndGeneratedDateBefore(firstDayOfMonth,

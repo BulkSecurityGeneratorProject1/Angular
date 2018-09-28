@@ -31,7 +31,15 @@ public class MonthWiseIncomeExpenseStatistics {
 	public void setActualTotal(Double actualTotal) {
 		this.actualTotal = actualTotal;
 	}
+
+	public String getMonthText() {
+		return monthText;
+	}
+	public void setMonthText(String monthText) {
+		this.monthText = monthText;
+	}
 	int month;
+	String monthText;
     Double actualTotal;
     
 }
