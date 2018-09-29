@@ -2,6 +2,7 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-invoice-heading" jhiTranslate="propMgmntApp.invoice.home.createOrEditLabel">Create or edit a Invoice</h2>
+            
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!invoice.id">
@@ -114,6 +115,7 @@
                 <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
+                <ngx-paypal [config]="payPalConfig"></ngx-paypal>
             </div>
         </form>
     </div>

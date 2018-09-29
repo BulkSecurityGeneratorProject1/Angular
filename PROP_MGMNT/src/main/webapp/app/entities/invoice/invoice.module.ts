@@ -2,6 +2,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { PropMgmntSharedModule } from 'app/shared';
+import { NgxPayPalModule } from 'ngx-paypal';
+
 import {
     InvoiceComponent,
     InvoiceDetailComponent,
@@ -15,7 +17,7 @@ import {
 const ENTITY_STATES = [...invoiceRoute, ...invoicePopupRoute];
 
 @NgModule({
-    imports: [PropMgmntSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [PropMgmntSharedModule, NgxPayPalModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [
         InvoiceComponent,
         InvoiceDetailComponent,
