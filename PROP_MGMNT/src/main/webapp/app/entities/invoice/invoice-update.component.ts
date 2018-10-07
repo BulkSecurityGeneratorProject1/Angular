@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JhiAlertService } from 'ng-jhipster';
-
+import { of } from 'rxjs';
 import { IInvoice } from 'app/shared/model/invoice.model';
 import { InvoiceService } from './invoice.service';
 import { IApartment } from 'app/shared/model/apartment.model';
 import { ApartmentService } from 'app/entities/apartment';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
+import { InvoiceStatus } from '../../shared/model/invoice.model';
 //https://github.com/Enngage/ngx-paypal
 @Component({
     selector: 'jhi-invoice-update',
@@ -22,6 +23,7 @@ export class InvoiceUpdateComponent implements OnInit {
     apartments: IApartment[];
     generatedDateDp: any;
     paidDateDp: any;
+    invoiceAmt: number = 9;
 
     constructor(
         private jhiAlertService: JhiAlertService,
@@ -31,10 +33,10 @@ export class InvoiceUpdateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.initConfig();
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ invoice }) => {
             this.invoice = invoice;
+            this.invoiceAmt = this.invoice.amount;
         });
         this.apartmentService.query().subscribe(
             (res: HttpResponse<IApartment[]>) => {
@@ -42,6 +44,7 @@ export class InvoiceUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        this.initConfig();
     }
 
     previousState() {
@@ -101,6 +104,8 @@ export class InvoiceUpdateComponent implements OnInit {
             },
             onPaymentComplete: (data, actions) => {
                 console.log('OnPaymentComplete');
+                this.invoice.invStatus = InvoiceStatus.Paid;
+                this.save();
             },
             onCancel: (data, actions) => {
                 console.log('OnCancel');
@@ -117,49 +122,8 @@ export class InvoiceUpdateComponent implements OnInit {
             transactions: [
                 {
                     amount: {
-                        total: 30.11,
                         currency: 'USD',
-                        details: {
-                            subtotal: 30.0,
-                            tax: 0.07,
-                            shipping: 0.03,
-                            handling_fee: 1.0,
-                            shipping_discount: -1.0,
-                            insurance: 0.01
-                        }
-                    },
-                    custom: 'Custom value',
-                    item_list: {
-                        items: [
-                            {
-                                name: 'hat',
-                                description: 'Brown hat.',
-                                quantity: 5,
-                                price: 3,
-                                tax: 0.01,
-                                sku: '1',
-                                currency: 'USD'
-                            },
-                            {
-                                name: 'handbag',
-                                description: 'Black handbag.',
-                                quantity: 1,
-                                price: 15,
-                                tax: 0.02,
-                                sku: 'product34',
-                                currency: 'USD'
-                            }
-                        ],
-                        shipping_address: {
-                            recipient_name: 'Brian Robinson',
-                            line1: '4th Floor',
-                            line2: 'Unit #34',
-                            city: 'San Jose',
-                            country_code: 'US',
-                            postal_code: '95131',
-                            phone: '011862212345678',
-                            state: 'CA'
-                        }
+                        total: this.invoice.amount
                     }
                 }
             ],
