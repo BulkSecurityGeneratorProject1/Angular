@@ -1,0 +1,4 @@
+heroku plugins:install java
+heroku create --no-remote
+
+heroku deploy:jar target/*.war --app evening-anchorage-36059

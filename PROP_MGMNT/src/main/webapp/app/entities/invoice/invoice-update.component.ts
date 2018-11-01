@@ -10,7 +10,7 @@ import { IApartment } from 'app/shared/model/apartment.model';
 import { ApartmentService } from 'app/entities/apartment';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
 import { InvoiceStatus } from '../../shared/model/invoice.model';
-//https://github.com/Enngage/ngx-paypal
+ /*paypal link : https://github.com/Enngage/ngx-paypal*/
 @Component({
     selector: 'jhi-invoice-update',
     templateUrl: './invoice-update.component.html'

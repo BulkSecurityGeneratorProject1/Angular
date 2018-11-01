@@ -31,6 +31,7 @@
     "nativeLanguage": "en",
     "languages": [
       "en"
-    ]
+    ],
+    "herokuDeployType": "jar"
   }
 }

@@ -106,7 +106,6 @@ export class HomeComponent implements OnInit {
                 this.yearlydata = [];
                 this.yearlydata.push(res.body.totalYearlyIncome);
                 this.yearlydata.push(res.body.totalYearlyExpense);
-                //this.monthlyChartOptions.Options.title.text = "September";
 
                 this.barchartdata = [];
                 for (let i = res.body.monthWiseIncomeStatistics.length - 1; i >= 0; i--) {
