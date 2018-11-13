@@ -9,39 +9,35 @@
     <property name="now" value="now()" dbms="h2"/>
 
     <property name="now" value="now()" dbms="mysql"/>
-<property name="now" value="current_timestamp" dbms="postgresql"/>
     <property name="autoIncrement" value="true"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Agreement.
+        Added the entity Apartment.
     -->
-    <changeSet id="20180924164601-1" author="jhipster">
-        <createTable tableName="agreement">
+    <changeSet id="20180924164602-1" author="jhipster">
+        <createTable tableName="apartment">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="agreement_start_date" type="date">
+            <column name="unit" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="agreement_end_date" type="date">
-                <constraints nullable="false" />
+            <column name="jhi_type" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="agreement_details" type="longblob">
+            <column name="unit_status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="agreement_details_content_type" type="varchar(255)">
+
+            <column name="mflapartment_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="apartment_id" type="bigint">
-                <constraints unique="true" nullable="true" />
-            </column>            <column name="tenant_id" type="bigint">
-                <constraints unique="true" nullable="true" />
-            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
