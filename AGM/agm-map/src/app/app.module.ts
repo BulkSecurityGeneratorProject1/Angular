@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 import {AgmCoreModule} from  '@agm/core';
+import { MarkerService } from './markers.service';
+import { GoogleMapsAPIWrapper} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,10 @@ import {AgmCoreModule} from  '@agm/core';
       apiKey:'AIzaSyAfJTVKnpLl0ULuuwDuix-9ANpyQhP6mfc'
     })
   ],
-  providers: [],
+  providers: [
+    MarkerService,
+    GoogleMapsAPIWrapper
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

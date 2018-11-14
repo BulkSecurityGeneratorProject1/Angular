@@ -1,5 +1,8 @@
 # AgmMap
 
+#https://www.code-sample.com/2018/05/angular-5-6-7-google-maps-agm-api-key.htmls
+#https://github.com/xomena-so/so48865595 - marker Service
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
 ## Development server
