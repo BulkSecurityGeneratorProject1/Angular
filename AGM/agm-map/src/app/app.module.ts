@@ -6,16 +6,22 @@ import { AppComponent } from './app.component';
 import {AgmCoreModule} from  '@agm/core';
 import { MarkerService } from './markers.service';
 import { GoogleMapsAPIWrapper} from '@agm/core';
+import { AgmDirectionModule} from 'agm-direction';
+import { GeocodeComponent } from './geocode/geocode.component'; // 
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GeocodeComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AgmCoreModule.forRoot({
       apiKey:'AIzaSyAfJTVKnpLl0ULuuwDuix-9ANpyQhP6mfc'
-    })
+    }),
+    AgmDirectionModule //agm-direction
   ],
   providers: [
     MarkerService,
